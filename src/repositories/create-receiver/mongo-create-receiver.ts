@@ -5,7 +5,9 @@ import {
 } from './../../controllers/create-receiver/protocols';
 import { MongoClient } from './../../database/mongo';
 
-export class MongoCreateReceiver implements ICreateReceiverRepository {
+// eslint-disable-next-line prettier/prettier
+export class MongoCreateReceiverRepository implements ICreateReceiverRepository
+{
   async createReceiver(params: CreateReceiverParams): Promise<Receiver> {
     const { insertedId } = await MongoClient.db
       .collection('receivers')

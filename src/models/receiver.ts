@@ -4,5 +4,5 @@ export interface Receiver {
   doc: string;
   bank: string;
   branch: string;
-  status: number;
+  status: string;
 }
