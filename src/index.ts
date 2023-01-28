@@ -3,9 +3,11 @@ import express from 'express';
 
 import { CreateReceiverController } from './controllers/create-receiver/create-receiver';
 import { GetReceiversController } from './controllers/get-receivers/get-receivers';
+import { UpdateReceiverController } from './controllers/update-receiver/update-receiver';
 import { MongoClient } from './database/mongo';
 import { MongoCreateReceiverRepository } from './repositories/create-receiver/mongo-create-receiver';
 import { MongoGetReceiversRepository } from './repositories/get-receivers/mongo-get-receivers';
+import { MongoUpdateReceiverRepository } from './repositories/update-receiver/mongo-update-receiver';
 
 const main = async () => {
   config();
@@ -41,6 +43,21 @@ const main = async () => {
 
     const { body, statusCode } = await createReceiverController.handle({
       body: req.body,
+    });
+
+    res.status(statusCode).send(body);
+  });
+
+  app.patch('/receivers/:id', async (req, res) => {
+    const mongoUpdateReceiverRepository = new MongoUpdateReceiverRepository();
+
+    const updateReceiverController = new UpdateReceiverController(
+      mongoUpdateReceiverRepository,
+    );
+
+    const { body, statusCode } = await updateReceiverController.handle({
+      body: req.body,
+      params: req.params,
     });
 
     res.status(statusCode).send(body);

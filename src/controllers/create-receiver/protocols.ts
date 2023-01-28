@@ -9,8 +9,11 @@ export interface ICreateReceiverController {
 export interface CreateReceiverParams {
   name: string;
   doc: string;
+  email: string;
+  phone: string;
   bank: string;
   branch: string;
+  randomKey: string;
   status: string;
 }
 

@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import { Receiver } from '../../models/receiver';
 import { HttpResponse, HttpRequest } from './../protocols';
 import {
@@ -13,18 +15,36 @@ export class CreateReceiverController implements ICreateReceiverController {
   async handle(
     httpRequest: HttpRequest<CreateReceiverParams>,
   ): Promise<HttpResponse<Receiver>> {
-    const validatorFields = ['name', 'doc', 'bank', 'branch', 'status'];
+    try {
+      const validatorFields = [
+        'name',
+        'email',
+        'phone',
+        'doc',
+        'bank',
+        'branch',
+        'randomKey',
+        'status',
+      ];
 
-    for (const field of validatorFields) {
-      if (!httpRequest?.body?.[field as keyof CreateReceiverParams]?.length) {
+      for (const field of validatorFields) {
+        if (!httpRequest?.body?.[field as keyof CreateReceiverParams]?.length) {
+          return {
+            statusCode: 400,
+            body: `Field ${field} is required`,
+          };
+        }
+      }
+
+      const emailIsValid = validator.isEmail(httpRequest.body?.email || '');
+
+      if (!emailIsValid) {
         return {
           statusCode: 400,
-          body: `Field ${field} is required`,
+          body: 'Email is invalid',
         };
       }
-    }
 
-    try {
       if (!httpRequest.body) {
         return {
           statusCode: 400,
