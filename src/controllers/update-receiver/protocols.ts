@@ -12,10 +12,6 @@ export interface UpdateReceiverParams {
   status?: string;
 }
 
-export interface IUpdateReceiverController {
-  handle(HttpRequest: HttpRequest<any>): Promise<HttpResponse<Receiver>>;
-}
-
 export interface IUpdateReceiverRepository {
   updateReceiver(id: string, params: UpdateReceiverParams): Promise<Receiver>;
 }

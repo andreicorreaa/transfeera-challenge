@@ -1,16 +1,15 @@
 import { Receiver } from '../../models/receiver';
 import { HttpRequest, HttpResponse } from '../protocols';
-import {
-  IUpdateReceiverController,
-  UpdateReceiverParams,
-  IUpdateReceiverRepository,
-} from './protocols';
+import { IController } from './../protocols';
+import { UpdateReceiverParams, IUpdateReceiverRepository } from './protocols';
 
-export class UpdateReceiverController implements IUpdateReceiverController {
+export class UpdateReceiverController implements IController {
   constructor(
     private readonly updateReceiverRepository: IUpdateReceiverRepository,
   ) {}
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Receiver>> {
+  async handle(
+    httpRequest: HttpRequest<UpdateReceiverParams>,
+  ): Promise<HttpResponse<Receiver>> {
     try {
       const id = httpRequest?.params?.id;
       const body = httpRequest?.body;
@@ -19,6 +18,13 @@ export class UpdateReceiverController implements IUpdateReceiverController {
         return {
           statusCode: 500,
           body: 'Missing receiver id',
+        };
+      }
+
+      if (!body) {
+        return {
+          statusCode: 500,
+          body: 'Missing fields',
         };
       }
 

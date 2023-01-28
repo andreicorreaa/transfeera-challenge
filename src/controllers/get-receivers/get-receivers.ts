@@ -1,9 +1,7 @@
-import {
-  IGetReceiversController,
-  IGetReceiversRepository,
-} from './protocols.js';
+import { IController } from './../protocols';
+import { IGetReceiversRepository } from './protocols.js';
 
-export class GetReceiversController implements IGetReceiversController {
+export class GetReceiversController implements IController {
   constructor(
     private readonly getReceiversRepository: IGetReceiversRepository,
   ) {}

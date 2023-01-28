@@ -1,11 +1,9 @@
 import { Receiver } from '../../models/receiver';
 import { HttpRequest, HttpResponse } from '../protocols';
-import {
-  IDeleteReceiverController,
-  IDeleteReceiverRepository,
-} from './protocols';
+import { IController } from './../protocols';
+import { IDeleteReceiverRepository } from './protocols';
 
-export class DeleteReceiverController implements IDeleteReceiverController {
+export class DeleteReceiverController implements IController {
   constructor(
     private readonly deleteReceiverRepository: IDeleteReceiverRepository,
   ) {}

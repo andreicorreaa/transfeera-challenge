@@ -1,13 +1,9 @@
 import validator from 'validator';
 
 import { Receiver } from '../../models/receiver';
-import { HttpResponse, HttpRequest } from './../protocols';
-import {
-  CreateReceiverParams,
-  ICreateReceiverController,
-  ICreateReceiverRepository,
-} from './protocols';
-export class CreateReceiverController implements ICreateReceiverController {
+import { HttpResponse, HttpRequest, IController } from './../protocols';
+import { CreateReceiverParams, ICreateReceiverRepository } from './protocols';
+export class CreateReceiverController implements IController {
   constructor(
     private readonly createReceiverRepository: ICreateReceiverRepository,
   ) {}
