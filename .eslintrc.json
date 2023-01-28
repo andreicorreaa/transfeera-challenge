@@ -46,13 +46,6 @@
       "error",
       "always"
     ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "always"
-      }
-    ],
     "import-helpers/order-imports": [
       "warn",
       {
