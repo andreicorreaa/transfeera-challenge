@@ -1,17 +1,21 @@
+import { config } from 'dotenv';
 import express from 'express';
 
 import { receiverRouter } from './modules/receiver/receiverRouter.js';
 
-const server = express();
+config();
 
-server.use(express.json());
+const app = express();
 
-server.use('/receiver', receiverRouter);
+app.use(express.json());
 
-server.get('/', (req, res) => {
-  res.send('Hello World');
+app.use('/receiver', receiverRouter);
+
+app.get('/', (req, res) => {
+  res.send('Transfeera');
 });
 
-server.listen(3333, () => {
-  console.log('Server started on port 3333');
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+  console.log('Server started on port' + port);
 });

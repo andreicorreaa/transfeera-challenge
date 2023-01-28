@@ -26,7 +26,8 @@
       {
         "singleQuote": true,
         "trailingComma": "all",
-        "arrowParens": "always"
+        "arrowParens": "always",
+        "endOfLine": "auto"
       }
     ],
     "indent": [
