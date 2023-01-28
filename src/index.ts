@@ -14,11 +14,6 @@ const main = async () => {
 
   await MongoClient.connect();
 
-  const port = process.env.PORT || 8000;
-  app.listen(port, () => {
-    console.log('Server started on port ' + port);
-  });
-
   app.get('/', (req, res) => {
     res.send('Transfeera');
   });
@@ -33,6 +28,11 @@ const main = async () => {
     const response = await getReceiversController.handle();
 
     res.send(response.body).status(response.statusCode);
+  });
+
+  const port = process.env.PORT || 8000;
+  app.listen(port, () => {
+    console.log('Server started on port ' + port);
   });
 };
 

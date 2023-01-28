@@ -1,16 +1,17 @@
 import { Receiver } from '../../models/receiver.js';
 import { IGetReceiversRepository } from './../../controllers/get-receivers/protocols.js';
+import { MongoClient } from './../../database/mongo';
 
 export class MongoGetReceiversRepository implements IGetReceiversRepository {
   async getReceivers(): Promise<Receiver[]> {
-    return [
-      {
-        name: 'Andrei',
-        doc: '460.412.838-35',
-        bank: 'Caixa',
-        branch: '0000-1',
-        status: 1,
-      },
-    ];
+    const receivers = await MongoClient.db
+      .collection<Omit<Receiver, 'id'>>('receivers')
+      .find({})
+      .toArray();
+
+    return receivers.map(({ _id, ...rest }) => ({
+      ...rest,
+      id: _id.toHexString(),
+    }));
   }
 }

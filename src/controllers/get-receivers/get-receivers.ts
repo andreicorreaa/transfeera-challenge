@@ -17,6 +17,7 @@ export class GetReceiversController implements IGetReceiversController {
         body: receivers,
       };
     } catch (error) {
+      console.log(error);
       return {
         statusCode: 500,
         body: 'Internal Error',
