@@ -1,4 +1,5 @@
 import { Receiver } from '../../models/receiver';
+import { MongoUser } from '../mongo-protocols';
 import {
   CreateReceiverParams,
   ICreateReceiverRepository,
@@ -14,7 +15,7 @@ export class MongoCreateReceiverRepository implements ICreateReceiverRepository
       .insertOne(params);
 
     const receiver = await MongoClient.db
-      .collection<Omit<Receiver, 'id'>>('receivers')
+      .collection<MongoUser>('receivers')
       .findOne({ _id: insertedId });
 
     if (!receiver) {

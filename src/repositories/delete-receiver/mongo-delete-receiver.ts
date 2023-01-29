@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 
 import { Receiver } from '../../models/receiver';
+import { MongoUser } from '../mongo-protocols';
 import { IDeleteReceiverRepository } from './../../controllers/delete-receiver/protocols';
 import { MongoClient } from './../../database/mongo';
 
@@ -8,7 +9,7 @@ import { MongoClient } from './../../database/mongo';
 export class MongoDeleteReceiverRepository implements IDeleteReceiverRepository {
   async deleteReceiver(id: string): Promise<Receiver> {
     const receiver = await MongoClient.db
-      .collection<Omit<Receiver, 'id'>>('receivers')
+      .collection<MongoUser>('receivers')
       .findOne({ _id: new ObjectId(id) });
 
     if (!receiver) {
