@@ -1,6 +1,7 @@
 import validator from 'validator';
 
 import { Receiver } from '../../models/receiver';
+import { badRequest, created, serverError } from './../helpers';
 import { HttpResponse, HttpRequest, IController } from './../protocols';
 import { CreateReceiverParams, ICreateReceiverRepository } from './protocols';
 export class CreateReceiverController implements IController {
@@ -10,7 +11,7 @@ export class CreateReceiverController implements IController {
 
   async handle(
     httpRequest: HttpRequest<CreateReceiverParams>,
-  ): Promise<HttpResponse<Receiver>> {
+  ): Promise<HttpResponse<Receiver | string>> {
     try {
       const validatorFields = [
         'name',
@@ -25,42 +26,27 @@ export class CreateReceiverController implements IController {
 
       for (const field of validatorFields) {
         if (!httpRequest?.body?.[field as keyof CreateReceiverParams]?.length) {
-          return {
-            statusCode: 400,
-            body: `Field ${field} is required`,
-          };
+          return badRequest(`Field ${field} is required`);
         }
       }
 
       const emailIsValid = validator.isEmail(httpRequest.body?.email || '');
 
       if (!emailIsValid) {
-        return {
-          statusCode: 400,
-          body: 'Email is invalid',
-        };
+        return badRequest('Email is invalid');
       }
 
       if (!httpRequest.body) {
-        return {
-          statusCode: 400,
-          body: 'No body in request',
-        };
+        return badRequest('No body in request');
       }
 
       const receiver = await this.createReceiverRepository.createReceiver(
         httpRequest.body,
       );
 
-      return {
-        statusCode: 201,
-        body: receiver,
-      };
+      return created<Receiver>(receiver);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: 'Internal Error',
-      };
+      return serverError();
     }
   }
 }

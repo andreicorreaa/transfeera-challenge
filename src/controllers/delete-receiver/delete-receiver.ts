@@ -1,5 +1,6 @@
 import { Receiver } from '../../models/receiver';
 import { HttpRequest, HttpResponse } from '../protocols';
+import { badRequest, ok, serverError } from './../helpers';
 import { IController } from './../protocols';
 import { IDeleteReceiverRepository } from './protocols';
 
@@ -7,28 +8,21 @@ export class DeleteReceiverController implements IController {
   constructor(
     private readonly deleteReceiverRepository: IDeleteReceiverRepository,
   ) {}
-  async handle(httpRequest: HttpRequest<any>): Promise<HttpResponse<Receiver>> {
+  async handle(
+    httpRequest: HttpRequest<any>,
+  ): Promise<HttpResponse<Receiver | string>> {
     try {
       const id = httpRequest?.params?.id;
 
       if (!id) {
-        return {
-          statusCode: 400,
-          body: 'Internal Error',
-        };
+        return badRequest('Missing receiver id');
       }
 
       const receiver = await this.deleteReceiverRepository.deleteReceiver(id);
 
-      return {
-        statusCode: 200,
-        body: receiver,
-      };
+      return ok<Receiver>(receiver);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: 'Internal Error',
-      };
+      return serverError();
     }
   }
 }

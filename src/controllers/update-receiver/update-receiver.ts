@@ -1,5 +1,7 @@
 import { Receiver } from '../../models/receiver';
+import { ok, serverError } from '../helpers';
 import { HttpRequest, HttpResponse } from '../protocols';
+import { badRequest } from './../helpers';
 import { IController } from './../protocols';
 import { UpdateReceiverParams, IUpdateReceiverRepository } from './protocols';
 
@@ -9,23 +11,17 @@ export class UpdateReceiverController implements IController {
   ) {}
   async handle(
     httpRequest: HttpRequest<UpdateReceiverParams>,
-  ): Promise<HttpResponse<Receiver>> {
+  ): Promise<HttpResponse<Receiver | string>> {
     try {
       const id = httpRequest?.params?.id;
       const body = httpRequest?.body;
 
       if (!id) {
-        return {
-          statusCode: 500,
-          body: 'Missing receiver id',
-        };
+        return badRequest('Missing receiver id');
       }
 
       if (!body) {
-        return {
-          statusCode: 500,
-          body: 'Missing fields',
-        };
+        return badRequest('Missing fields');
       }
 
       const fieldsAllowedUpdate: (keyof UpdateReceiverParams)[] = [
@@ -44,10 +40,7 @@ export class UpdateReceiverController implements IController {
       );
 
       if (fieldNotAllowedUpdate) {
-        return {
-          statusCode: 400,
-          body: 'Some field is not allowed',
-        };
+        return badRequest('Some field is not allowed');
       }
 
       const receiver = await this.updateReceiverRepository.updateReceiver(
@@ -55,15 +48,9 @@ export class UpdateReceiverController implements IController {
         body,
       );
 
-      return {
-        statusCode: 200,
-        body: receiver,
-      };
+      return ok<Receiver>(receiver);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: 'Internal Error',
-      };
+      return serverError();
     }
   }
 }

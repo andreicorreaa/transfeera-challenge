@@ -1,4 +1,6 @@
-import { IController } from './../protocols';
+import { ok, serverError } from '../helpers';
+import { Receiver } from './../../models/receiver';
+import { HttpResponse, IController } from './../protocols';
 import { IGetReceiversRepository } from './protocols.js';
 
 export class GetReceiversController implements IController {
@@ -6,20 +8,13 @@ export class GetReceiversController implements IController {
     private readonly getReceiversRepository: IGetReceiversRepository,
   ) {}
 
-  async handle() {
+  async handle(): Promise<HttpResponse<Receiver[] | string>> {
     try {
       const receivers = await this.getReceiversRepository.getReceivers();
 
-      return {
-        statusCode: 200,
-        body: receivers,
-      };
+      return ok<Receiver[]>(receivers);
     } catch (error) {
-      console.log(error);
-      return {
-        statusCode: 500,
-        body: 'Internal Error',
-      };
+      return serverError();
     }
   }
 }
