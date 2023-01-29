@@ -2,7 +2,7 @@
 
 An API developed for the Software Engineer Full Stack job at Transfeera.
 
-This project has as main libraries Node.js, Express.js, Typescript and MongoDB. Seeks to apply SOLID concepts, clean code, standard repository, etc.
+This project has as main libraries Node.js, Express.js, Typescript and MongoDB. Seeks to apply SOLID concepts, clean code, repository-pattern, etc.
 
 ## Prerequisites
 
