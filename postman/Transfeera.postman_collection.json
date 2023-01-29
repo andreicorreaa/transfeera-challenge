@@ -1,0 +1,125 @@
+{
+	"info": {
+		"_postman_id": "05d58274-6e34-4e7f-8f3f-45671feb2926",
+		"name": "Transfeera",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5366803"
+	},
+	"item": [
+		{
+			"name": "List Receivers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/receivers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"receivers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Receiver",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste\",\r\n    \"email\": \"andrei_kom12@hotmail.com\",\r\n    \"phone\": \"14997016950\",\r\n    \"doc\": \"460.412.838-35\",\r\n    \"bank\": \"1\",\r\n    \"branch\": \"00001-2\",\r\n    \"randomKey\": \"74942453008738242423353807099001\",\r\n    \"status\": \"draft\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/receivers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"receivers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Receiver",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/receivers/63d5eade65c0db68a687a14e",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"receivers",
+						"63d5eade65c0db68a687a14e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Receiver",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Teste\",\r\n    \"email\": \"andrei_kom13@hotmail.com\",\r\n    \"phone\": \"14997016950\",\r\n    \"doc\": \"460.412.838-35\",\r\n    \"bank\": \"1\",\r\n    \"branch\": \"00001-2\",\r\n    \"randomKey\": \"74942453008738242423353807099001\",\r\n    \"status\": \"draft\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/receivers/63d5eade65c0db68a687a14e",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"receivers",
+						"63d5eade65c0db68a687a14e"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "app_url",
+			"value": "localhost:8000",
+			"type": "string"
+		}
+	]
+}
