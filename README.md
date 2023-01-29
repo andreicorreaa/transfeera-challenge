@@ -1,11 +1,8 @@
-<h1 align="center">
-   Transfeera
-</h1>
+# Transfeera
 
+An API developed for the Software Engineer Full Stack job at Transfeera.
 
-<h4 align="center">
-   An API developed for the Software Engineer Full Stack job at Transfeera
-</h4>
+This project has as main libraries Node.js, Express.js, Typescript and MongoDB. Seeks to apply SOLID concepts, clean code, standard repository, etc.
 
 ## Prerequisites
 
