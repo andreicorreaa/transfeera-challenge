@@ -6,10 +6,13 @@
   "author": "Andrei Correa <andrei_kom12@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon --watch src/ --exec ts-node src/index.ts -e ts"
+    "start:dev": "nodemon --watch src/ --exec ts-node src/index.ts -e ts",
+    "migrate:up": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down"
   },
   "dependencies": {
     "express": "^4.18.2",
+    "migrate-mongo": "^9.0.0",
     "mongodb": "^4.13.0",
     "validator": "^13.7.0"
   },
