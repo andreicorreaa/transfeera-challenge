@@ -1,4 +1,5 @@
 {
+  "exclude": ["node_modules", "src/*.test.ts",  "vite.config.ts"],
   "compilerOptions": {
     "outDir": "build",
     "rootDir": "src",
