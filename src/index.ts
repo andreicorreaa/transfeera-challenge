@@ -1,7 +1,7 @@
 import { MongoClient } from './database/mongo';
 import { app } from './server';
 
-const main = async () => {
+export const main = async () => {
   await MongoClient.connect();
 
   const port = process.env.PORT || 8000;
