@@ -12,12 +12,18 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{app_url}}/receivers",
+					"raw": "{{app_url}}/receivers?page=1",
 					"host": [
 						"{{app_url}}"
 					],
 					"path": [
 						"receivers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -30,7 +36,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Teste\",\r\n    \"email\": \"andrei_kom12@hotmail.com\",\r\n    \"phone\": \"14997016950\",\r\n    \"doc\": \"460.412.838-35\",\r\n    \"bank\": \"1\",\r\n    \"branch\": \"00001-2\",\r\n    \"randomKey\": \"74942453008738242423353807099001\",\r\n    \"status\": \"draft\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Test3\",\r\n    \"email\": \"andrei_kom12@hotmail.com\",\r\n    \"phone\": \"14997016950\",\r\n    \"doc\": \"460.412.838-35\",\r\n    \"bank\": \"1\",\r\n    \"branch\": \"00001-2\",\r\n    \"key\": \"460.412.838-35\",\r\n    \"keyType\": \"CPF\",\r\n    \"status\": \"draft\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,18 +56,26 @@
 			"response": []
 		},
 		{
-			"name": "Delete Receiver",
+			"name": "Delete Receivers",
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\": [\r\n        \"63dc96b0ae85b92e5f0179c3\",\r\n        \"63dc96b0ae85b92e5f0179c4\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{app_url}}/receivers/63d5eade65c0db68a687a14e",
+					"raw": "{{app_url}}/receivers",
 					"host": [
 						"{{app_url}}"
 					],
 					"path": [
-						"receivers",
-						"63d5eade65c0db68a687a14e"
+						"receivers"
 					]
 				}
 			},
@@ -89,6 +103,31 @@
 					"path": [
 						"receivers",
 						"63d5eade65c0db68a687a14e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Receiver By Field",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/receivers/status/Rascunho?page=1",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"receivers",
+						"status",
+						"Rascunho"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
 					]
 				}
 			},
