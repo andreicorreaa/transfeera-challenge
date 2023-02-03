@@ -1,5 +1,5 @@
 import { Receiver } from '../../models/receiver';
-import { ok, serverError } from '../helpers';
+import { ok, schemaValidator, serverError } from '../helpers';
 import { HttpRequest, HttpResponse } from '../protocols';
 import { badRequest } from './../helpers';
 import { IController } from './../protocols';
@@ -35,6 +35,7 @@ export class UpdateReceiverController implements IController {
         'keyType',
         'status',
       ];
+
       const fieldNotAllowedUpdate = Object.keys(body).some(
         (key) =>
           !fieldsAllowedUpdate.includes(key as keyof UpdateReceiverParams),
@@ -42,6 +43,10 @@ export class UpdateReceiverController implements IController {
 
       if (fieldNotAllowedUpdate) {
         return badRequest('Some field is not allowed');
+      }
+
+      if (!schemaValidator(body.keyType, body.key)) {
+        return badRequest('Key is invalid for this KeyType');
       }
 
       const receiver = await this.updateReceiverRepository.updateReceiver(

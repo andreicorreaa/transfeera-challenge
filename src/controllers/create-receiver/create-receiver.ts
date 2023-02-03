@@ -1,7 +1,12 @@
 import validator from 'validator';
 
 import { Receiver } from '../../models/receiver';
-import { badRequest, created, serverError } from './../helpers';
+import {
+  badRequest,
+  created,
+  schemaValidator,
+  serverError,
+} from './../helpers';
 import { HttpResponse, HttpRequest, IController } from './../protocols';
 import { CreateReceiverParams, ICreateReceiverRepository } from './protocols';
 export class CreateReceiverController implements IController {
@@ -39,6 +44,10 @@ export class CreateReceiverController implements IController {
 
       if (!httpRequest.body) {
         return badRequest('No body in request');
+      }
+
+      if (!schemaValidator(httpRequest.body.keyType, httpRequest.body.key)) {
+        return badRequest('Key is invalid for this KeyType');
       }
 
       const receiver = await this.createReceiverRepository.createReceiver(
