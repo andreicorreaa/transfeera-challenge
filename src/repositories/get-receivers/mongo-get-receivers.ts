@@ -4,10 +4,14 @@ import { IGetReceiversRepository } from './../../controllers/get-receivers/proto
 import { MongoClient } from './../../database/mongo';
 
 export class MongoGetReceiversRepository implements IGetReceiversRepository {
-  async getReceivers(): Promise<Receiver[]> {
+  async getReceivers(page: number): Promise<Receiver[]> {
+    const limit = 10;
+    const skip = limit * (page - 1);
     const receivers = await MongoClient.db
       .collection<MongoUser>('receivers')
       .find({})
+      .skip(skip)
+      .limit(limit)
       .toArray();
 
     return receivers.map(({ _id, ...rest }) => ({
@@ -16,13 +20,21 @@ export class MongoGetReceiversRepository implements IGetReceiversRepository {
     }));
   }
 
-  async getReceiversByField(f: string, value: string): Promise<Receiver[]> {
+  async getReceiversByField(
+    f: string,
+    value: string,
+    page: number,
+  ): Promise<Receiver[]> {
+    const limit = 10;
+    const skip = limit * (page - 1);
     const findFilter = new Map();
     findFilter.set(f, value);
 
     const receivers = await MongoClient.db
       .collection<MongoUser>('receivers')
       .find(findFilter)
+      .skip(skip)
+      .limit(limit)
       .toArray();
 
     return receivers.map(({ _id, ...rest }) => ({

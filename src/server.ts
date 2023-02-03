@@ -27,7 +27,9 @@ app.get('/receivers', async (req, res) => {
     mongoGetReceiversRepository,
   );
 
-  const { body, statusCode } = await getReceiversController.handle();
+  const { body, statusCode } = await getReceiversController.handle({
+    query: req.query,
+  });
 
   res.status(statusCode).send(body);
 });
@@ -41,6 +43,7 @@ app.get('/receivers/:field/:value', async (req, res) => {
 
   const { body, statusCode } = await getReceiversController.getByField({
     params: req.params,
+    query: req.query,
   });
 
   res.status(statusCode).send(body);
