@@ -32,6 +32,20 @@ app.get('/receivers', async (req, res) => {
   res.status(statusCode).send(body);
 });
 
+app.get('/receivers/status/:status', async (req, res) => {
+  const mongoGetReceiversRepository = new MongoGetReceiversRepository();
+
+  const getReceiversController = new GetReceiversController(
+    mongoGetReceiversRepository,
+  );
+
+  const { body, statusCode } = await getReceiversController.getByStatus({
+    params: req.params,
+  });
+
+  res.status(statusCode).send(body);
+});
+
 app.post('/receivers', async (req, res) => {
   const mongoCreateReceiverRepository = new MongoCreateReceiverRepository();
 

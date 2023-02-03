@@ -15,4 +15,16 @@ export class MongoGetReceiversRepository implements IGetReceiversRepository {
       id: _id.toHexString(),
     }));
   }
+
+  async getReceiversByStatus(status: string): Promise<Receiver[]> {
+    const receivers = await MongoClient.db
+      .collection<MongoUser>('receivers')
+      .find({ status: status })
+      .toArray();
+
+    return receivers.map(({ _id, ...rest }) => ({
+      ...rest,
+      id: _id.toHexString(),
+    }));
+  }
 }
