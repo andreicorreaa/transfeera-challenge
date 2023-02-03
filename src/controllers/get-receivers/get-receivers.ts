@@ -1,5 +1,6 @@
 import { ok, serverError } from '../helpers';
 import { Receiver } from './../../models/receiver';
+import { badRequest } from './../helpers';
 import { HttpRequest, HttpResponse, IController } from './../protocols';
 import { IGetReceiversRepository } from './protocols.js';
 
@@ -18,12 +19,21 @@ export class GetReceiversController implements IController {
     }
   }
 
-  async getByStatus(
+  async getByField(
     httpRequest: HttpRequest<any>,
   ): Promise<HttpResponse<Receiver[] | string>> {
     try {
-      const receivers = await this.getReceiversRepository.getReceiversByStatus(
-        httpRequest.params?.status,
+      const validatorFields = ['name', 'status', 'keyType', 'key'];
+
+      const isValidField = validatorFields.find(
+        (el) => el == httpRequest.params?.field,
+      );
+
+      if (!isValidField) return badRequest('Field is invalid');
+
+      const receivers = await this.getReceiversRepository.getReceiversByField(
+        httpRequest.params?.field,
+        httpRequest.params?.value,
       );
 
       return ok<Receiver[]>(receivers);

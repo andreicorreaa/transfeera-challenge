@@ -16,10 +16,13 @@ export class MongoGetReceiversRepository implements IGetReceiversRepository {
     }));
   }
 
-  async getReceiversByStatus(status: string): Promise<Receiver[]> {
+  async getReceiversByField(f: string, value: string): Promise<Receiver[]> {
+    const findFilter = new Map();
+    findFilter.set(f, value);
+
     const receivers = await MongoClient.db
       .collection<MongoUser>('receivers')
-      .find({ status: status })
+      .find(findFilter)
       .toArray();
 
     return receivers.map(({ _id, ...rest }) => ({

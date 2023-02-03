@@ -20,7 +20,8 @@ export class CreateReceiverController implements IController {
         'doc',
         'bank',
         'branch',
-        'randomKey',
+        'key',
+        'keyType',
         'status',
       ];
 

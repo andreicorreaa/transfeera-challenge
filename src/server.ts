@@ -32,14 +32,14 @@ app.get('/receivers', async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-app.get('/receivers/status/:status', async (req, res) => {
+app.get('/receivers/:field/:value', async (req, res) => {
   const mongoGetReceiversRepository = new MongoGetReceiversRepository();
 
   const getReceiversController = new GetReceiversController(
     mongoGetReceiversRepository,
   );
 
-  const { body, statusCode } = await getReceiversController.getByStatus({
+  const { body, statusCode } = await getReceiversController.getByField({
     params: req.params,
   });
 
