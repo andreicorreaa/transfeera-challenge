@@ -61,7 +61,7 @@ app.patch('/receivers/:id', async (req, res) => {
   res.status(statusCode).send(body);
 });
 
-app.delete('/receivers/:id', async (req, res) => {
+app.delete('/receivers', async (req, res) => {
   const mongoDeleteReceiverRepository = new MongoDeleteReceiverRepository();
 
   const deleteReceiverController = new DeleteReceiverController(
@@ -69,7 +69,7 @@ app.delete('/receivers/:id', async (req, res) => {
   );
 
   const { body, statusCode } = await deleteReceiverController.handle({
-    params: req.params,
+    body: req.body,
   });
 
   res.status(statusCode).send(body);

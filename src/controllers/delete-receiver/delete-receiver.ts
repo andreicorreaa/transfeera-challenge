@@ -10,17 +10,21 @@ export class DeleteReceiverController implements IController {
   ) {}
   async handle(
     httpRequest: HttpRequest<any>,
-  ): Promise<HttpResponse<Receiver | string>> {
+  ): Promise<HttpResponse<Receiver[] | string>> {
     try {
-      const id = httpRequest?.params?.id;
+      const ids = httpRequest?.body?.ids;
 
-      if (!id) {
-        return badRequest('Missing receiver id');
+      if (ids.length <= 0) {
+        return badRequest('Missing receiver ids');
       }
 
-      const receiver = await this.deleteReceiverRepository.deleteReceiver(id);
+      const receivers = await Promise.all(
+        ids.map(async (id: string): Promise<Receiver> => {
+          return await this.deleteReceiverRepository.deleteReceiver(id);
+        }),
+      );
 
-      return ok<Receiver>(receiver);
+      return ok<Receiver[]>(receivers);
     } catch (error) {
       return serverError();
     }
