@@ -8,7 +8,8 @@ export interface UpdateReceiverParams {
   doc?: string;
   bank?: string;
   branch?: string;
-  randomKey?: string;
+  key?: string;
+  keyType?: string;
   status?: string;
 }
 

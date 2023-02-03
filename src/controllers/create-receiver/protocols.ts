@@ -6,7 +6,8 @@ export interface CreateReceiverParams {
   phone: string;
   bank: string;
   branch: string;
-  randomKey: string;
+  key: string;
+  keyType: string;
   status: string;
 }
 

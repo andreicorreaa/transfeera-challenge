@@ -31,7 +31,8 @@ export class UpdateReceiverController implements IController {
         'phone',
         'bank',
         'branch',
-        'randomKey',
+        'key',
+        'keyType',
         'status',
       ];
       const fieldNotAllowedUpdate = Object.keys(body).some(
